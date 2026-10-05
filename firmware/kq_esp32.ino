@@ -1,10 +1,8 @@
 #include <WiFi.h>
 #include <WebServer.h>
+#include "secrets.h"
 
 #define LED_PIN 2
-
-const char* WIFI_SSID = "Kerialnet";
-const char* WIFI_PASSWORD = "Ursa1rom3!";
 
 WebServer server(80);
 
