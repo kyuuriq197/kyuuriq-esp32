@@ -55,6 +55,25 @@
       ESP32 → Wi-Fi → Local Web Interface
 </p>
 
+<!-- Flasher -->
+
+<h2 align="center">Flasher</h2>
+
+<p align="center">
+      KQ ESP includes a browser-based USB firmware flasher for ESP32-WROOM-32.<br>
+      The flasher uses Web Serial and works directly from the browser.
+</p>
+
+<p align="center">
+      <a href="https://kyuuriq197.github.io/kyuuriq-esp32/flasher/">
+            <img src="https://img.shields.io/badge/Open-KQ%20ESP%20Flasher-65d6a6?style=flat" alt="Open KQ ESP Flasher">
+      </a>
+</p>
+
+<p align="center">
+      Connect ESP32 → Erase Flash → Flash KQ ESP → Reset
+</p>
+
 <!-- OTA -->
 
 <h2 align="center">OTA</h2>
@@ -118,5 +137,23 @@
 
 <p align="center">
       <b>Current</b><br>
-      Wi-Fi · Web UI · PWM
+      Wi-Fi · Web UI · PWM · LED Modes · Preferences · Serial · OTA · USB Flasher
+</p>
 
+<p align="center">
+      <b>Planned</b><br>
+      Sensors · External LEDs · OLED · SD Card · GPIO Control · More Hardware Modules · Automatic OTA
+</p>
+
+<!-- Версия -->
+
+<h2 align="center">Version</h2>
+
+<p align="center">
+      <b>v0.4.2</b>
+</p>
+
+<p align="center">
+      <b>KQ ESP</b><br>
+      Local Control · Embedded · ESP32
+</p>
