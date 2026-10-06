@@ -1,13 +1,14 @@
+html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>KYUURIQ ESP</title>
+    <title>KQ ESP</title>
 
     <meta name="description"
-          content="KYUURIQ ESP — custom firmware for ESP32-WROOM-32.">
+          content="KQ ESP — custom firmware and local control platform for ESP32-WROOM-32.">
 
     <style>
         * {
@@ -207,16 +208,16 @@
     <div class="container">
 
         <div class="badge">
-            ESP32-WROOM-32 · Open Source
+            ESP32-WROOM-32 · Local · Open Source
         </div>
 
         <h1>
-            KYUURIQ <span class="accent">ESP</span>
+            KQ <span class="accent">ESP</span>
         </h1>
 
         <p class="subtitle">
-            Custom firmware for ESP32-WROOM-32.
-            Built for experimentation, learning and hardware control.
+            Custom local firmware platform for ESP32-WROOM-32.
+            Built for experimentation, learning, hardware control and embedded development.
         </p>
 
         <div class="buttons">
@@ -233,10 +234,17 @@
                 Explore
             </a>
 
+            <a
+                class="button"
+                href="flasher/">
+                KQ ESP Flasher
+            </a>
+
         </div>
 
     </div>
 </header>
+
 
 <section id="features">
     <div class="container">
@@ -256,26 +264,59 @@
             </div>
 
             <div class="card">
-                <h3>Web Control</h3>
+                <h3>Local Web Control</h3>
                 <p>
-                    Control the device from a browser
-                    using a lightweight web interface.
+                    Control the ESP32 from a browser
+                    through a local Web interface.
+                    No cloud server is required.
                 </p>
             </div>
 
             <div class="card">
-                <h3>GPIO</h3>
+                <h3>PWM</h3>
                 <p>
-                    Designed to interact with external
-                    hardware through ESP32 GPIO pins.
+                    Control LED brightness using
+                    hardware PWM from 0% to 100%.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>LED Modes</h3>
+                <p>
+                    Solid, Blink, Fast Blink,
+                    Slow Blink, Pulse and Breathing modes.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Preferences</h3>
+                <p>
+                    Device settings such as brightness,
+                    LED state and mode are stored persistently.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Serial Console</h3>
+                <p>
+                    Control the device and inspect its state
+                    through the Serial interface.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>OTA Updates</h3>
+                <p>
+                    Upload new firmware to the ESP32
+                    over the local Wi-Fi network.
                 </p>
             </div>
 
             <div class="card">
                 <h3>System Info</h3>
                 <p>
-                    Monitor memory, uptime, Wi-Fi state
-                    and other ESP32 information.
+                    Monitor free RAM, uptime,
+                    Wi-Fi signal and firmware version.
                 </p>
             </div>
 
@@ -284,11 +325,12 @@
     </div>
 </section>
 
+
 <section>
     <div class="container">
 
         <h2 class="section-title">
-            Versions
+            LED Modes
         </h2>
 
         <div class="card">
@@ -296,64 +338,96 @@
             <div class="version">
                 <div>
                     <div class="version-name">
-                        KYUURIQ ESP v0.1
+                        Solid
                     </div>
 
                     <div class="version-description">
-                        Serial interface and LED control.
+                        Constant LED brightness.
                     </div>
                 </div>
 
                 <span class="tag">
-                    Initial
+                    Mode 1
                 </span>
             </div>
 
             <div class="version">
                 <div>
                     <div class="version-name">
-                        KYUURIQ ESP v0.2
+                        Blink
                     </div>
 
                     <div class="version-description">
-                        Wi-Fi and browser-based control panel.
+                        Standard LED blinking effect.
                     </div>
                 </div>
 
                 <span class="tag">
-                    Current
+                    Mode 2
                 </span>
             </div>
 
             <div class="version">
                 <div>
                     <div class="version-name">
-                        KYUURIQ ESP v0.3
+                        Fast Blink
                     </div>
 
                     <div class="version-description">
-                        GPIO and PWM control.
+                        Fast blinking effect.
                     </div>
                 </div>
 
                 <span class="tag">
-                    Planned
+                    Mode 3
                 </span>
             </div>
 
             <div class="version">
                 <div>
                     <div class="version-name">
-                        KYUURIQ ESP v0.4
+                        Slow Blink
                     </div>
 
                     <div class="version-description">
-                        Persistent settings and OTA updates.
+                        Slow blinking effect.
                     </div>
                 </div>
 
                 <span class="tag">
-                    Planned
+                    Mode 4
+                </span>
+            </div>
+
+            <div class="version">
+                <div>
+                    <div class="version-name">
+                        Pulse
+                    </div>
+
+                    <div class="version-description">
+                        Smooth brightness pulse effect.
+                    </div>
+                </div>
+
+                <span class="tag">
+                    Mode 5
+                </span>
+            </div>
+
+            <div class="version">
+                <div>
+                    <div class="version-name">
+                        Breathing
+                    </div>
+
+                    <div class="version-description">
+                        Smooth breathing-style brightness animation.
+                    </div>
+                </div>
+
+                <span class="tag">
+                    Mode 6
                 </span>
             </div>
 
@@ -361,6 +435,7 @@
 
     </div>
 </section>
+
 
 <section>
     <div class="container">
@@ -372,7 +447,7 @@
         <div class="terminal">
 
             <span class="comment">
-                # KYUURIQ ESP
+                # KQ ESP v0.4.2
             </span>
             <br>
 
@@ -383,11 +458,19 @@
             <br>
             off
             <br>
-            blink
+            brightness 0-100
             <br>
-            fast
+            mode solid
             <br>
-            slow
+            mode blink
+            <br>
+            mode fast
+            <br>
+            mode slow
+            <br>
+            mode pulse
+            <br>
+            mode breathing
             <br>
             status
             <br>
@@ -400,10 +483,66 @@
     </div>
 </section>
 
+
+<section>
+    <div class="container">
+
+        <h2 class="section-title">
+            Firmware
+        </h2>
+
+        <div class="card">
+
+            <div class="version">
+
+                <div>
+                    <div class="version-name">
+                        KQ ESP v0.4.2
+                    </div>
+
+                    <div class="version-description">
+                        Wi-Fi, Local Web UI, PWM, LED Modes,
+                        Preferences, Serial Console and OTA.
+                    </div>
+                </div>
+
+                <span class="tag">
+                    Current
+                </span>
+
+            </div>
+
+            <div class="version">
+
+                <div>
+                    <div class="version-name">
+                        Full USB Flasher
+                    </div>
+
+                    <div class="version-description">
+                        Flash KQ ESP firmware directly to
+                        ESP32-WROOM-32 through USB.
+                    </div>
+                </div>
+
+                <a
+                    class="button"
+                    href="flasher/">
+                    Open Flasher
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
 <footer>
 
     <div class="container">
-        KYUURIQ ESP · 2026 · Built for ESP32-WROOM-32
+        KQ ESP · v0.4.2 · 2026 · Built for ESP32-WROOM-32
     </div>
 
 </footer>
