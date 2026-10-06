@@ -1,79 +1,297 @@
-html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>KQ ESP Flasher</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <div class="container">
 
-    <header>
-        <div class="logo">KQ ESP</div>
-        <div class="subtitle">ESP32 FLASHER</div>
+    <header class="header">
+
+        <div class="brand">
+            <div class="logo">KQ ESP</div>
+            <div class="subtitle">ESP32 FLASHER</div>
+        </div>
+
+        <div class="header-status">
+            WEB SERIAL
+        </div>
+
     </header>
+
 
     <main>
 
+        <!-- FIRMWARE -->
+
         <section class="card">
-            <div class="section-title">Firmware</div>
+
+            <div class="section-title">
+                Firmware
+            </div>
 
             <div class="firmware">
-                <div>
-                    <strong>KQ ESP v0.4.2</strong>
-                    <span>ESP32-WROOM-32</span>
+
+                <div class="firmware-info">
+
+                    <div class="firmware-name">
+                        KQ ESP v0.4.2
+                    </div>
+
+                    <div class="firmware-device">
+                        ESP32-WROOM-32 · Full merged image
+                    </div>
+
                 </div>
 
-                <div class="badge">BIN</div>
+                <div class="badge">
+                    READY
+                </div>
+
             </div>
+
+            <div class="firmware-meta">
+
+                <div>
+                    <span>IMAGE</span>
+                    <strong>merged.bin</strong>
+                </div>
+
+                <div>
+                    <span>FLASH</span>
+                    <strong>4 MB</strong>
+                </div>
+
+                <div>
+                    <span>ADDRESS</span>
+                    <strong>0x000000</strong>
+                </div>
+
+            </div>
+
         </section>
 
+
+        <!-- DEVICE -->
+
         <section class="card">
-            <div class="section-title">Device</div>
 
-            <button id="connectButton" class="button primary">
-                Connect ESP32
-            </button>
-
-            <div id="deviceStatus" class="status">
-                <span class="dot"></span>
-                Waiting for device
+            <div class="section-title">
+                Device
             </div>
+
+            <div class="device-box">
+
+                <div class="device-state">
+
+                    <span
+                        id="statusDot"
+                        class="dot"
+                    ></span>
+
+                    <div>
+
+                        <div
+                            id="deviceStatus"
+                            class="device-status"
+                        >
+                            Waiting for device
+                        </div>
+
+                        <div
+                            id="portInfo"
+                            class="port-info"
+                        >
+                            Connect your ESP32 via USB
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="button-row">
+
+                <button
+                    id="connectButton"
+                    class="button primary"
+                >
+                    Select USB Device
+                </button>
+
+                <button
+                    id="reconnectButton"
+                    class="button secondary"
+                >
+                    Reconnect
+                </button>
+
+            </div>
+
         </section>
 
-        <section class="card">
-            <div class="section-title">Flash</div>
 
-            <button id="flashButton" class="button flash" disabled>
+        <!-- FLASH -->
+
+        <section class="card">
+
+            <div class="section-title">
+                Flash
+            </div>
+
+            <div
+                id="flashStage"
+                class="flash-stage"
+            >
+                Waiting for ESP32
+            </div>
+
+            <button
+                id="flashButton"
+                class="button flash"
+                disabled
+            >
                 FLASH KQ ESP
             </button>
 
             <div class="progress">
-                <div id="progressBar"></div>
+
+                <div
+                    id="progressBar"
+                    class="progress-bar"
+                ></div>
+
             </div>
 
-            <div id="progressText">0%</div>
+            <div class="progress-info">
+
+                <span id="progressStage">
+                    Ready
+                </span>
+
+                <span id="progressText">
+                    0%
+                </span>
+
+            </div>
+
         </section>
 
-        <section class="card log-card">
-            <div class="section-title">Console</div>
 
-            <pre id="log">KQ ESP Flasher v0.1
+        <!-- CONSOLE -->
+
+        <section class="card log-card">
+
+            <div class="console-header">
+
+                <div class="section-title">
+                    Console
+                </div>
+
+                <button
+                    id="clearLogButton"
+                    class="clear-button"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+            <pre id="log">KQ ESP Flasher v0.3
 Ready.</pre>
+
+        </section>
+
+
+        <!-- HOW IT WORKS -->
+
+        <section class="card">
+
+            <div class="section-title">
+                How it works
+            </div>
+
+            <div class="steps">
+
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div>
+                        <strong>Connect</strong>
+                        <span>
+                            Plug the ESP32 into USB.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div>
+                        <strong>Select</strong>
+                        <span>
+                            Choose the ESP32 serial device.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div>
+                        <strong>Flash</strong>
+                        <span>
+                            Erase flash and write KQ ESP.
+                        </span>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">04</div>
+                    <div>
+                        <strong>Reset</strong>
+                        <span>
+                            The ESP32 restarts automatically.
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
         </section>
 
     </main>
 
+
     <footer>
-        KQ ESP · Local USB Flasher
+
+        <div>
+            KQ ESP · Local USB Flasher
+        </div>
+
+        <div class="footer-sub">
+            ESP32-WROOM-32 · Web Serial
+        </div>
+
     </footer>
 
 </div>
 
-<script type="module" src="app.js"></script>
+
+<script
+    type="module"
+    src="app.js"
+></script>
 
 </body>
 </html>
