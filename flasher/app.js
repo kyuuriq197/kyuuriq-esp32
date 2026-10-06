@@ -2,7 +2,7 @@ javascript
 import {
     ESPLoader,
     Transport
-} from "https://cdn.jsdelivr.net/npm/esptool-js@0.5.6/+esm";
+} from "https://unpkg.com/esptool-js@0.5.7/bundle.js";
 
 const connectButton = document.getElementById("connectButton");
 const flashButton = document.getElementById("flashButton");
@@ -15,161 +15,420 @@ const logElement = document.getElementById("log");
 let port = null;
 let transport = null;
 let loader = null;
+let connected = false;
+let flashing = false;
+
+
+// --------------------------------------------------
+// LOG
+// --------------------------------------------------
 
 function log(message) {
     logElement.textContent += `\n${message}`;
     logElement.scrollTop = logElement.scrollHeight;
 }
 
-function setStatus(message, connected = false) {
+
+// --------------------------------------------------
+// STATUS
+// --------------------------------------------------
+
+function setStatus(message, active = false) {
+
+    const color = active
+        ? "#65d6a6"
+        : "#65716b";
+
     deviceStatus.innerHTML = `
-        <span class="dot"
-              style="background:${connected ? "#65d6a6" : "#65716b"}"></span>
+        <span
+            class="dot"
+            style="background:${color}">
+        </span>
         ${message}
     `;
 }
 
+
+// --------------------------------------------------
+// PROGRESS
+// --------------------------------------------------
+
+function setProgress(percent) {
+
+    const value = Math.max(
+        0,
+        Math.min(100, Math.round(percent))
+    );
+
+    progressBar.style.width = `${value}%`;
+    progressText.textContent = `${value}%`;
+}
+
+
+// --------------------------------------------------
+// ERROR
+// --------------------------------------------------
+
+function getErrorMessage(error) {
+
+    if (!error) {
+        return "Unknown error";
+    }
+
+    if (error.message) {
+        return error.message;
+    }
+
+    return String(error);
+}
+
+
+// --------------------------------------------------
+// CONNECT
+// --------------------------------------------------
+
 connectButton.addEventListener("click", async () => {
 
+    if (connected) {
+        return;
+    }
+
     if (!("serial" in navigator)) {
+
         alert(
             "Web Serial is not supported.\n\n" +
             "Use Google Chrome or Microsoft Edge."
         );
+
         return;
     }
 
     try {
+
+        connectButton.disabled = true;
 
         log("Requesting ESP32 serial port...");
 
         port = await navigator.serial.requestPort();
 
-        transport = new Transport(port);
+        log("Serial port selected.");
+
+        transport = new Transport(port, true);
 
         loader = new ESPLoader({
-            transport,
+
+            transport: transport,
+
             baudrate: 115200,
+
             terminal: {
+
                 clean: () => {},
-                writeLine: (data) => log(data),
-                write: (data) => log(data)
-            }
+
+                writeLine: (data) => {
+                    log(data);
+                },
+
+                write: (data) => {
+                    log(data);
+                }
+            },
+
+            debugLogging: false
         });
 
-        setStatus("Connecting to ESP32...", false);
 
-        const chip = await loader.main();
+        setStatus(
+            "Connecting to ESP32...",
+            false
+        );
 
-        log(`Chip detected: ${chip}`);
+        log("Connecting...");
 
-        setStatus(`ESP32 connected · ${chip}`, true);
+        const chipName = await loader.main();
+
+        log(`Chip detected: ${chipName}`);
+
+        connected = true;
+
+        setStatus(
+            `ESP32 connected · ${chipName}`,
+            true
+        );
+
+        connectButton.textContent =
+            "ESP32 Connected";
 
         flashButton.disabled = false;
 
-        connectButton.textContent = "ESP32 Connected";
+        log("Device is ready.");
 
     } catch (error) {
 
         console.error(error);
 
-        log(`[ERROR] ${error.message || error}`);
+        log(
+            `[ERROR] ${getErrorMessage(error)}`
+        );
 
-        setStatus("Connection failed", false);
+        setStatus(
+            "Connection failed",
+            false
+        );
+
+        connected = false;
+
+        flashButton.disabled = true;
+
+        connectButton.disabled = false;
+
+        if (transport) {
+
+            try {
+                await transport.disconnect();
+            } catch (_) {}
+
+        }
+
+        port = null;
+        transport = null;
+        loader = null;
     }
 });
 
+
+// --------------------------------------------------
+// FLASH
+// --------------------------------------------------
+
 flashButton.addEventListener("click", async () => {
 
-    if (!loader) {
+    if (!loader || !connected || flashing) {
         return;
     }
 
     try {
 
+        flashing = true;
+
+        connectButton.disabled = true;
         flashButton.disabled = true;
 
-        setStatus("Preparing firmware...", true);
+        setProgress(0);
 
-        log("Loading KQ ESP firmware...");
+        setStatus(
+            "Preparing firmware...",
+            true
+        );
+
+        log("");
+        log("================================");
+        log("KQ ESP FULL FLASH");
+        log("================================");
+
+
+        // ------------------------------------------
+        // LOAD MERGED FIRMWARE
+        // ------------------------------------------
+
+        log("Loading KQ ESP merged firmware...");
 
         const response = await fetch(
-            "./firmware/kq_esp32.ino.bin"
+            "./firmware/kq_esp32.ino.merged.bin",
+            {
+                cache: "no-store"
+            }
         );
 
         if (!response.ok) {
+
             throw new Error(
-                "Firmware file not found."
+                `Firmware file not found (${response.status})`
             );
         }
 
-        const buffer = await response.arrayBuffer();
+        const buffer =
+            await response.arrayBuffer();
 
-        const bytes = new Uint8Array(buffer);
+        const firmware =
+            new Uint8Array(buffer);
 
         log(
-            `Firmware size: ${bytes.length} bytes`
+            `Firmware size: ${firmware.length} bytes`
         );
 
-        const fileData = {
-            0x10000: bytes
-        };
+        if (firmware.length === 0) {
 
-        progressBar.style.width = "0%";
-        progressText.textContent = "0%";
+            throw new Error(
+                "Firmware file is empty."
+            );
+        }
 
-        log("Starting flash...");
+
+        // ------------------------------------------
+        // ERASE
+        // ------------------------------------------
+
+        setStatus(
+            "Erasing ESP32 flash...",
+            true
+        );
+
+        log("Erasing entire flash...");
+
+        await loader.eraseFlash();
+
+        log("Flash erase complete.");
+
+
+        // ------------------------------------------
+        // WRITE
+        // ------------------------------------------
+
+        setStatus(
+            "Flashing KQ ESP...",
+            true
+        );
+
+        log(
+            "Writing merged firmware at 0x000000..."
+        );
+
+        setProgress(0);
+
 
         await loader.writeFlash({
+
             fileArray: [
+
                 {
-                    data: bytes,
-                    address: 0x10000
+                    data: firmware,
+
+                    address: 0x000000
                 }
+
             ],
 
-            flashSize: "keep",
+            flashMode: "dio",
 
-            reportProgress: (fileIndex, written, total) => {
+            flashFreq: "40m",
+
+            flashSize: "4MB",
+
+            eraseAll: false,
+
+            compress: true,
+
+            reportProgress: (
+                fileIndex,
+                written,
+                total
+            ) => {
 
                 const percent =
-                    Math.round(
-                        (written / total) * 100
-                    );
+                    (written / total) * 100;
 
-                progressBar.style.width =
-                    `${percent}%`;
-
-                progressText.textContent =
-                    `${percent}%`;
+                setProgress(percent);
             }
         });
 
+
+        // ------------------------------------------
+        // COMPLETE
+        // ------------------------------------------
+
+        setProgress(100);
+
+        log("");
         log("Flash complete.");
+        log("KQ ESP firmware written successfully.");
 
         setStatus(
             "KQ ESP flashed successfully",
             true
         );
 
-        progressBar.style.width = "100%";
-        progressText.textContent = "100%";
 
-        log("You can now reset the ESP32.");
+        // ------------------------------------------
+        // RESET
+        // ------------------------------------------
+
+        log("Resetting ESP32...");
+
+        try {
+
+            await loader.after("hard_reset");
+
+            log("ESP32 reset complete.");
+
+        } catch (resetError) {
+
+            log(
+                `[WARNING] Reset failed: ${
+                    getErrorMessage(resetError)
+                }`
+            );
+
+            log(
+                "You can manually press the ESP32 RESET button."
+            );
+        }
+
+
+        log("");
+        log("================================");
+        log("KQ ESP v0.4.2 READY");
+        log("================================");
+
 
     } catch (error) {
 
         console.error(error);
 
-        log(`[ERROR] ${error.message || error}`);
+        log("");
+        log(
+            `[ERROR] ${getErrorMessage(error)}`
+        );
 
         setStatus(
             "Flash failed",
             false
         );
 
+        setProgress(0);
+
     } finally {
 
-        flashButton.disabled = false;
+        flashing = false;
+
+        connectButton.disabled =
+            connected;
+
+        flashButton.disabled =
+            !connected;
     }
 });
+
+
+// --------------------------------------------------
+// INITIAL STATE
+// --------------------------------------------------
+
+setStatus(
+    "Waiting for device",
+    false
+);
+
+setProgress(0);
+
+log(
+    "KQ ESP Flasher v0.2"
+);
+
+log(
+    "Ready."
+);
+
+log(
+    "Connect your ESP32 via USB."
+);
