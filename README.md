@@ -1,113 +1,240 @@
 # KYUURIQ ESP
 
-Custom firmware for ESP32-WROOM-32.
+> Локальная ESP32-платформа управления от Kyuuriq.  
+> Local ESP32 control platform by Kyuuriq.
 
-KYUURIQ ESP is a small experimental firmware focused on learning ESP32 development, GPIO control, Wi-Fi and web-based device management.
+---
 
-## Features
+## 🇷🇺 Русский
 
-### v0.2
+**KYUURIQ ESP** — собственная прошивка для ESP32-WROOM-32.
 
-* ESP32-WROOM-32 support
-* LED control
-* Serial command interface
-* Wi-Fi connection
-* Web control panel
-* Blink modes
-* System information
-* Free heap monitoring
-* Uptime
-* ESP32 reboot command
+Проект объединяет локальную Web-панель, управление встроенным LED, PWM, LED-эффекты, сохранение настроек и OTA-прошивку.
 
-## Planned
+### Текущая версия
 
-* GPIO control
-* PWM
-* Brightness control
-* Improved web interface
-* Persistent settings
-* OTA firmware updates
+**v0.4.2**
 
-## Hardware
+### Возможности
 
-Tested on:
+- Wi-Fi
+- Локальная Web-панель
+- Управление встроенным LED
+- Регулировка яркости 0–100%
+- Режимы LED:
+  - Solid — постоянное свечение
+  - Blink — мигание
+  - Fast Blink — быстрое мигание
+  - Slow Blink — медленное мигание
+  - Pulse — пульсация
+  - Breathing — плавное свечение
+- Сохранение настроек
+- OTA-обновление прошивки
+- Управление через Serial Monitor
+- Информация о системе
+- Локальное управление без облака
 
-* ESP32-WROOM-32
-* USB Type-C ESP32 development board
-* CH340 USB-UART
+### LED
 
-## Installation
+Встроенный LED использует:
 
-### 1. Install Arduino IDE
+GPIO 2
 
-Install Arduino IDE and the ESP32 board package.
+Яркость:
 
-Select:
+0–100%
 
-`ESP32 Dev Module`
+### Web-панель
 
-Select the COM port belonging to your ESP32 board.
+После подключения ESP32 к Wi-Fi открой IP-адрес устройства в браузере:
 
-### 2. Configure Wi-Fi
+http://ESP32-IP
 
-Copy:
+Например:
 
-`firmware/secrets.example.h`
+http://192.168.1.123
 
-to:
+Через Web-панель доступны:
 
-`firmware/secrets.h`
+- включение / выключение LED
+- регулировка яркости
+- выбор режима
+- информация об устройстве
+- перезагрузка
 
-Then edit `secrets.h`:
+### Serial-команды
 
-```cpp
-#pragma once
+on  
+off  
+brightness 0-100
 
-#define WIFI_SSID "YOUR_WIFI_NAME"
-#define WIFI_PASSWORD "YOUR_WIFI_PASSWORD"
-```
+mode solid  
+mode blink  
+mode fast  
+mode slow  
+mode pulse  
+mode breathing
 
-Do not commit `secrets.h` to Git.
-
-It is intentionally excluded by `.gitignore`.
-
-### 3. Upload
-
-Open:
-
-`firmware/KYUURIQ_ESP.ino`
-
-Compile and upload it to the ESP32.
-
-Open Serial Monitor at:
-
-`115200 baud`
-
-After connecting to Wi-Fi, the ESP32 will print its local IP address.
-
-Open that IP address in a browser connected to the same network.
-
-## Serial Commands
-
-```text
-on
-off
-blink
-fast
-slow
-status
-reboot
+status  
+reboot  
 help
-```
 
-## Version
+### OTA
 
-Current version:
+После первой прошивки через USB ESP32 можно обновлять по Wi-Fi через Arduino IDE.
 
-**v0.2**
+OTA hostname:
 
-## Project status
+KYUURIQ-ESP
 
-Experimental / educational project.
+GitHub используется для хранения исходного кода и документации. Сам ESP32 работает локально и не зависит от GitHub.
 
-KYUURIQ ESP is being developed incrementally while learning ESP32 firmware development.
+### Hardware
+
+ESP32-WROOM-32  
+USB Type-C  
+CH340
+
+### Структура проекта
+
+kyuuriq-esp32/  
+├── kq_esp32.ino  
+├── secrets.h  
+└── README.md
+
+`secrets.h` содержит данные Wi-Fi и не должен публиковаться в GitHub.
+
+### Roadmap
+
+- [x] Wi-Fi
+- [x] Web-панель
+- [x] Управление LED
+- [x] PWM / яркость
+- [x] LED-режимы
+- [x] Сохранение настроек
+- [x] OTA
+- [x] Serial-команды
+- [ ] Управление внешними LED
+- [ ] Датчики
+- [ ] Дополнительные модули
+- [ ] Автоматический OTA через GitHub Releases
+
+---
+
+## 🇬🇧 English
+
+**KYUURIQ ESP** is a custom firmware for the ESP32-WROOM-32.
+
+The project combines a local Web UI, built-in LED control, PWM brightness, LED effects, persistent settings and OTA firmware updates.
+
+### Current Version
+
+**v0.4.2**
+
+### Features
+
+- Wi-Fi
+- Local Web UI
+- Built-in LED control
+- 0–100% brightness control
+- LED modes:
+  - Solid
+  - Blink
+  - Fast Blink
+  - Slow Blink
+  - Pulse
+  - Breathing
+- Persistent settings
+- OTA firmware updates
+- Serial Monitor commands
+- System information
+- Local-only control
+
+### LED
+
+Built-in LED:
+
+GPIO 2
+
+Brightness:
+
+0–100%
+
+### Web UI
+
+After connecting to Wi-Fi, open the ESP32 IP address in your browser:
+
+http://ESP32-IP
+
+Example:
+
+http://192.168.1.123
+
+The Web UI provides:
+
+- LED ON / OFF
+- Brightness control
+- Mode selection
+- Device information
+- Reboot
+
+### Serial Commands
+
+on  
+off  
+brightness 0-100
+
+mode solid  
+mode blink  
+mode fast  
+mode slow  
+mode pulse  
+mode breathing
+
+status  
+reboot  
+help
+
+### OTA
+
+After the first USB firmware upload, the ESP32 can be updated over Wi-Fi using Arduino IDE.
+
+OTA hostname:
+
+KYUURIQ-ESP
+
+GitHub is used for source code and documentation. The ESP32 itself operates locally and does not depend on GitHub.
+
+### Hardware
+
+ESP32-WROOM-32  
+USB Type-C  
+CH340
+
+### Project Structure
+
+kyuuriq-esp32/  
+├── kq_esp32.ino  
+├── secrets.h  
+└── README.md
+
+`secrets.h` contains local Wi-Fi credentials and must not be published.
+
+### Roadmap
+
+- [x] Wi-Fi
+- [x] Web UI
+- [x] LED control
+- [x] PWM / brightness
+- [x] LED modes
+- [x] Persistent settings
+- [x] OTA
+- [x] Serial commands
+- [ ] External LED control
+- [ ] Sensors
+- [ ] Additional hardware modules
+- [ ] Automatic OTA via GitHub Releases
+
+---
+
+**KYUURIQ ESP · Local control · v0.4.2**
