@@ -1,8 +1,11 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
@@ -10,18 +13,36 @@
 
     <title>KQ ESP Flasher</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <script
+        type="module"
+        src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"
+    ></script>
+
 </head>
+
 
 <body>
 
 <div class="container">
 
+
     <header class="header">
 
         <div class="brand">
-            <div class="logo">KQ ESP</div>
-            <div class="subtitle">ESP32 FLASHER</div>
+
+            <div class="logo">
+                KQ ESP
+            </div>
+
+            <div class="subtitle">
+                ESP32 FLASHER
+            </div>
+
         </div>
 
         <div class="header-status">
@@ -33,6 +54,7 @@
 
     <main>
 
+
         <!-- FIRMWARE -->
 
         <section class="card">
@@ -40,6 +62,7 @@
             <div class="section-title">
                 Firmware
             </div>
+
 
             <div class="firmware">
 
@@ -55,11 +78,13 @@
 
                 </div>
 
+
                 <div class="badge">
                     READY
                 </div>
 
             </div>
+
 
             <div class="firmware-meta">
 
@@ -83,6 +108,7 @@
         </section>
 
 
+
         <!-- DEVICE -->
 
         <section class="card">
@@ -91,28 +117,21 @@
                 Device
             </div>
 
+
             <div class="device-box">
 
                 <div class="device-state">
 
-                    <span
-                        id="statusDot"
-                        class="dot"
-                    ></span>
+                    <span class="dot"></span>
+
 
                     <div>
 
-                        <div
-                            id="deviceStatus"
-                            class="device-status"
-                        >
-                            Waiting for device
+                        <div class="device-status">
+                            Ready to connect
                         </div>
 
-                        <div
-                            id="portInfo"
-                            class="port-info"
-                        >
+                        <div class="port-info">
                             Connect your ESP32 via USB
                         </div>
 
@@ -125,23 +144,23 @@
 
             <div class="button-row">
 
-                <button
-                    id="connectButton"
-                    class="button primary"
+                <esp-web-install-button
+                    manifest="./manifest.json"
                 >
-                    Select USB Device
-                </button>
 
-                <button
-                    id="reconnectButton"
-                    class="button secondary"
-                >
-                    Reconnect
-                </button>
+                    <button
+                        slot="activate"
+                        class="button primary"
+                    >
+                        Select USB Device
+                    </button>
+
+                </esp-web-install-button>
 
             </div>
 
         </section>
+
 
 
         <!-- FLASH -->
@@ -152,68 +171,50 @@
                 Flash
             </div>
 
-            <div
-                id="flashStage"
-                class="flash-stage"
-            >
-                Waiting for ESP32
+
+            <div class="flash-stage">
+                Ready to flash KQ ESP
             </div>
 
-            <button
-                id="flashButton"
-                class="button flash"
-                disabled
+
+            <esp-web-install-button
+                manifest="./manifest.json"
             >
-                FLASH KQ ESP
-            </button>
+
+                <button
+                    slot="activate"
+                    class="button flash"
+                >
+                    FLASH KQ ESP
+                </button>
+
+            </esp-web-install-button>
+
 
             <div class="progress">
 
                 <div
-                    id="progressBar"
                     class="progress-bar"
+                    style="width: 0%"
                 ></div>
 
             </div>
 
+
             <div class="progress-info">
 
-                <span id="progressStage">
+                <span>
+                    ESP Web Tools
+                </span>
+
+                <span>
                     Ready
                 </span>
 
-                <span id="progressText">
-                    0%
-                </span>
-
             </div>
 
         </section>
 
-
-        <!-- CONSOLE -->
-
-        <section class="card log-card">
-
-            <div class="console-header">
-
-                <div class="section-title">
-                    Console
-                </div>
-
-                <button
-                    id="clearLogButton"
-                    class="clear-button"
-                >
-                    Clear
-                </button>
-
-            </div>
-
-            <pre id="log">KQ ESP Flasher v0.3
-Ready.</pre>
-
-        </section>
 
 
         <!-- HOW IT WORKS -->
@@ -224,53 +225,101 @@ Ready.</pre>
                 How it works
             </div>
 
+
             <div class="steps">
 
+
                 <div class="step">
-                    <div class="step-number">01</div>
+
+                    <div class="step-number">
+                        01
+                    </div>
+
                     <div>
-                        <strong>Connect</strong>
+
+                        <strong>
+                            Connect
+                        </strong>
+
                         <span>
                             Plug the ESP32 into USB.
                         </span>
+
                     </div>
+
                 </div>
 
+
                 <div class="step">
-                    <div class="step-number">02</div>
+
+                    <div class="step-number">
+                        02
+                    </div>
+
                     <div>
-                        <strong>Select</strong>
+
+                        <strong>
+                            Select
+                        </strong>
+
                         <span>
                             Choose the ESP32 serial device.
                         </span>
+
                     </div>
+
                 </div>
 
-                <div class="step">
-                    <div class="step-number">03</div>
-                    <div>
-                        <strong>Flash</strong>
-                        <span>
-                            Erase flash and write KQ ESP.
-                        </span>
-                    </div>
-                </div>
 
                 <div class="step">
-                    <div class="step-number">04</div>
-                    <div>
-                        <strong>Reset</strong>
-                        <span>
-                            The ESP32 restarts automatically.
-                        </span>
+
+                    <div class="step-number">
+                        03
                     </div>
+
+                    <div>
+
+                        <strong>
+                            Flash
+                        </strong>
+
+                        <span>
+                            Erase and install KQ ESP.
+                        </span>
+
+                    </div>
+
                 </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        04
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Reset
+                        </strong>
+
+                        <span>
+                            ESP32 restarts automatically.
+                        </span>
+
+                    </div>
+
+                </div>
+
 
             </div>
 
         </section>
 
+
     </main>
+
 
 
     <footer>
@@ -280,19 +329,15 @@ Ready.</pre>
         </div>
 
         <div class="footer-sub">
-            ESP32-WROOM-32 · Web Serial
+            ESP32-WROOM-32 · ESP Web Tools
         </div>
 
     </footer>
 
+
 </div>
 
-
-<script
-    type="module"
-    src="app.js"
-></script>
-
 </body>
+
 </html>
 
