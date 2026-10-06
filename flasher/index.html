@@ -1,0 +1,80 @@
+html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KQ ESP Flasher</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <div class="logo">KQ ESP</div>
+        <div class="subtitle">ESP32 FLASHER</div>
+    </header>
+
+    <main>
+
+        <section class="card">
+            <div class="section-title">Firmware</div>
+
+            <div class="firmware">
+                <div>
+                    <strong>KQ ESP v0.4.2</strong>
+                    <span>ESP32-WROOM-32</span>
+                </div>
+
+                <div class="badge">BIN</div>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="section-title">Device</div>
+
+            <button id="connectButton" class="button primary">
+                Connect ESP32
+            </button>
+
+            <div id="deviceStatus" class="status">
+                <span class="dot"></span>
+                Waiting for device
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="section-title">Flash</div>
+
+            <button id="flashButton" class="button flash" disabled>
+                FLASH KQ ESP
+            </button>
+
+            <div class="progress">
+                <div id="progressBar"></div>
+            </div>
+
+            <div id="progressText">0%</div>
+        </section>
+
+        <section class="card log-card">
+            <div class="section-title">Console</div>
+
+            <pre id="log">KQ ESP Flasher v0.1
+Ready.</pre>
+        </section>
+
+    </main>
+
+    <footer>
+        KQ ESP · Local USB Flasher
+    </footer>
+
+</div>
+
+<script type="module" src="app.js"></script>
+
+</body>
+</html>
+
