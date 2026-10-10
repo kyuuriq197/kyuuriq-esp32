@@ -5,10 +5,12 @@
 #include "secrets.h"
 #include "src/config.h"
 #include "src/core/mainmenu.h"
+#include "src/core/webmenu.h"
+#include "src/core/wifisetup.h"
 
 
 // ============================================================
-// KYUURIQ ESP v0.5.0
+// KYUURIQ ESP v0.5.1
 // ESP32-WROOM-32
 // ============================================================
 
@@ -1209,6 +1211,12 @@ button:active {
     Local device control
   </p>
 
+  <p style="margin-top:10px">
+    <a href="/menu" style="color:#65d6a6;text-decoration:none;font-weight:600">
+      Open Web Menu &rarr;
+    </a>
+  </p>
+
 </div>
 
 
@@ -1466,7 +1474,7 @@ button:active {
     </span>
 
     <span class="system-value">
-      v0.5.0
+      v0.5.1
     </span>
 
   </div>
@@ -1476,7 +1484,7 @@ button:active {
 
 <div class="footer">
 
-  KYUURIQ ESP · LOCAL · v0.5.0
+  KYUURIQ ESP · LOCAL · v0.5.1
 
 </div>
 
@@ -1968,7 +1976,7 @@ void handleCommand(
     Serial.println();
 
     Serial.println(
-      "KYUURIQ ESP v0.5.0"
+      "KYUURIQ ESP v0.5.1"
     );
 
 
@@ -2243,7 +2251,7 @@ void setup() {
 
 
   Serial.println(
-    "        KYUURIQ ESP v0.5.0"
+    "        KYUURIQ ESP v0.5.1"
   );
 
 
@@ -2297,9 +2305,23 @@ void setup() {
   );
 
 
+  String wifiSsid;
+  String wifiPass;
+
+
+  if (
+    !wifiLoadCreds(wifiSsid, wifiPass)
+  ) {
+
+    wifiSsid = WIFI_SSID;
+    wifiPass = WIFI_PASSWORD;
+
+  }
+
+
   WiFi.begin(
-    WIFI_SSID,
-    WIFI_PASSWORD
+    wifiSsid.c_str(),
+    wifiPass.c_str()
   );
 
 
@@ -2395,6 +2417,9 @@ void setup() {
     );
 
 
+    webMenuBegin(server);
+
+
     server.begin();
 
 
@@ -2432,8 +2457,11 @@ void setup() {
 
 
     Serial.println(
-      "Check secrets.h"
+      "Starting Wi-Fi setup portal..."
     );
+
+
+    wifiSetupPortal();
 
   }
 
