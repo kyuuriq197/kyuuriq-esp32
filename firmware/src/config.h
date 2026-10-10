@@ -1,6 +1,6 @@
 #pragma once
 
-#define KQ_VERSION "0.5.1"
+#define KQ_VERSION "0.5.2"
 
 #define LED_PIN 2
 #define PWM_FREQUENCY 5000

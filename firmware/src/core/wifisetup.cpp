@@ -1,4 +1,5 @@
 #include "wifisetup.h"
+#include "improvsetup.h"
 #include "../config.h"
 #include <WiFi.h>
 #include <WebServer.h>
@@ -84,6 +85,7 @@ void wifiSetupPortal() {
 
   while (true) {
     setupServer.handleClient();
+    improvLoop();
     delay(2);
   }
 }

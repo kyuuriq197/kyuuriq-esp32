@@ -7,10 +7,11 @@
 #include "src/core/mainmenu.h"
 #include "src/core/webmenu.h"
 #include "src/core/wifisetup.h"
+#include "src/core/improvsetup.h"
 
 
 // ============================================================
-// KYUURIQ ESP v0.5.1
+// KYUURIQ ESP v0.5.2
 // ESP32-WROOM-32
 // ============================================================
 
@@ -1474,7 +1475,7 @@ button:active {
     </span>
 
     <span class="system-value">
-      v0.5.1
+      v0.5.2
     </span>
 
   </div>
@@ -1484,7 +1485,7 @@ button:active {
 
 <div class="footer">
 
-  KYUURIQ ESP · LOCAL · v0.5.1
+  KYUURIQ ESP · LOCAL · v0.5.2
 
 </div>
 
@@ -1976,7 +1977,7 @@ void handleCommand(
     Serial.println();
 
     Serial.println(
-      "KYUURIQ ESP v0.5.1"
+      "KYUURIQ ESP v0.5.2"
     );
 
 
@@ -2251,7 +2252,7 @@ void setup() {
 
 
   Serial.println(
-    "        KYUURIQ ESP v0.5.1"
+    "        KYUURIQ ESP v0.5.2"
   );
 
 
@@ -2289,6 +2290,13 @@ void setup() {
   resetEffect();
 
   applyLED();
+
+
+  // ==========================================================
+  // IMPROV (Wi-Fi setup from browser)
+  // ==========================================================
+
+  improvBegin();
 
 
   // ==========================================================
@@ -2336,6 +2344,8 @@ void setup() {
     delay(500);
 
     Serial.print(".");
+
+    improvLoop();
 
     attempts++;
 
