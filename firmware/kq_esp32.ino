@@ -11,7 +11,7 @@
 
 
 // ============================================================
-// KYUURIQ ESP v0.5.2
+// KYUURIQ ESP v0.5.3
 // ESP32-WROOM-32
 // ============================================================
 
@@ -1475,7 +1475,7 @@ button:active {
     </span>
 
     <span class="system-value">
-      v0.5.2
+      v0.5.3
     </span>
 
   </div>
@@ -1485,7 +1485,7 @@ button:active {
 
 <div class="footer">
 
-  KYUURIQ ESP · LOCAL · v0.5.2
+  KYUURIQ ESP · LOCAL · v0.5.3
 
 </div>
 
@@ -1977,7 +1977,7 @@ void handleCommand(
     Serial.println();
 
     Serial.println(
-      "KYUURIQ ESP v0.5.2"
+      "KYUURIQ ESP v0.5.3"
     );
 
 
@@ -2252,7 +2252,7 @@ void setup() {
 
 
   Serial.println(
-    "        KYUURIQ ESP v0.5.2"
+    "        KYUURIQ ESP v0.5.3"
   );
 
 
