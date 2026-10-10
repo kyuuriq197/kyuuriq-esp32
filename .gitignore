@@ -1,0 +1,4 @@
+firmware/secrets.h
+firmware/build/
+dist/
+/kq_esp32.ino.merged.bin

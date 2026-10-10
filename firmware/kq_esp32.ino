@@ -3,10 +3,12 @@
 #include <ArduinoOTA.h>
 #include <Preferences.h>
 #include "secrets.h"
+#include "src/config.h"
+#include "src/core/mainmenu.h"
 
 
 // ============================================================
-// KYUURIQ ESP v0.4.2
+// KYUURIQ ESP v0.5.0
 // ESP32-WROOM-32
 // ============================================================
 
@@ -1464,7 +1466,7 @@ button:active {
     </span>
 
     <span class="system-value">
-      v0.4.2
+      v0.5.0
     </span>
 
   </div>
@@ -1474,7 +1476,7 @@ button:active {
 
 <div class="footer">
 
-  KYUURIQ ESP · LOCAL · v0.4.2
+  KYUURIQ ESP · LOCAL · v0.5.0
 
 </div>
 
@@ -1966,7 +1968,7 @@ void handleCommand(
     Serial.println();
 
     Serial.println(
-      "KYUURIQ ESP v0.4.2"
+      "KYUURIQ ESP v0.5.0"
     );
 
 
@@ -2241,7 +2243,7 @@ void setup() {
 
 
   Serial.println(
-    "        KYUURIQ ESP v0.4.2"
+    "        KYUURIQ ESP v0.5.0"
   );
 
 
@@ -2445,6 +2447,11 @@ void setup() {
 
 
   Serial.println();
+
+
+#ifdef KQ_MENU
+  mainMenuRun();
+#endif
 
 }
 

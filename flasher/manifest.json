@@ -1,7 +1,7 @@
 
 {
     "name": "KQ ESP",
-    "version": "0.4.2",
+    "version": "0.5.0",
     "new_install_prompt_erase": true,
     "builds": [
         {

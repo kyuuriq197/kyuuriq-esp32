@@ -7,7 +7,7 @@
 <!-- Плашки / Бейджи -->
 
 <p align="center">
-      <a href="https://github.com/kyuuriq197/kyuuriq-esp32"><img src="https://img.shields.io/badge/KQ%20ESP-v0.4.2-65d6a6?style=flat" alt="KQ ESP Badge"></a>
+      <a href="https://github.com/kyuuriq197/kyuuriq-esp32"><img src="https://img.shields.io/badge/KQ%20ESP-v0.5.0-65d6a6?style=flat" alt="KQ ESP Badge"></a>
       <a href="https://www.arduino.cc/"><img src="https://img.shields.io/badge/Arduino-ESP32-00979D?style=flat&logo=arduino" alt="Arduino Badge"></a>
       <a href="https://www.espressif.com/en/products/socs/esp32"><img src="https://img.shields.io/badge/ESP32-WROOM--32-E7352C?style=flat" alt="ESP32 Badge"></a>
       <a href="LICENSE"><img src="https://img.shields.io/badge/Control-Local-6f42c1?style=flat" alt="Local Control Badge"></a>
@@ -35,6 +35,11 @@
 
 <p align="center">
       Wi-Fi · Local Web UI · PWM · LED Modes · Preferences · Serial Console · OTA
+</p>
+
+<p align="center">
+      Modular source: <code>firmware/src/</code><br>
+      core (menu · display · input) + modules (WiFi · BLE · IR · GPIO · Tools)
 </p>
 
 <p align="center">
@@ -137,7 +142,7 @@
 
 <p align="center">
       <b>Current</b><br>
-      Wi-Fi · Web UI · PWM · LED Modes · Preferences · Serial · OTA · USB Flasher
+      Wi-Fi · Web UI · PWM · LED Modes · Preferences · Serial · OTA · USB Flasher · Modular Menu
 </p>
 
 <p align="center">
@@ -150,7 +155,7 @@
 <h2 align="center">Version</h2>
 
 <p align="center">
-      <b>v0.4.2</b>
+      <b>v0.5.0</b>
 </p>
 
 <p align="center">
